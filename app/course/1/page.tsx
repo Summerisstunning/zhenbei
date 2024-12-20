@@ -138,7 +138,7 @@ export default function Course1() {
                       <li 
                         key={index}
                         onClick={() => handleStepClick(step)}
-                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 transition-colors text-gray-700 hover:shadow-md transform hover:scale-102 transition-all duration-300"
+                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 text-gray-700 hover:shadow-md transform hover:scale-102 transition-all duration-300"
                       >
                         {index + 1}. {step.title}
                       </li>
@@ -165,7 +165,7 @@ export default function Course1() {
                       <li 
                         key={index}
                         onClick={() => handleStepClick(step)}
-                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 transition-colors text-gray-700 hover:shadow-md transform hover:scale-102 transition-all duration-300"
+                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 text-gray-700 hover:shadow-md transform hover:scale-102 transition-all duration-300"
                       >
                         {index + 1}. {step.title}
                       </li>
