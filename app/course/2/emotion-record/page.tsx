@@ -71,7 +71,7 @@ export default function EmotionRecord() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-8 bg-gradient-to-b from-gray-50 to-white">
+    <div className="flex min-h-screen flex-col items-center p-8 bg-gradient-to-b from-gray-50 to-white">
       <motion.div 
         className="w-full max-w-4xl"
         initial={{ opacity: 0, y: 20 }}
@@ -110,7 +110,7 @@ export default function EmotionRecord() {
                   fill="#8884d8"
                   dataKey="value"
                   label={({ name, percent }) => 
-                    \`\${name} (\${(percent * 100).toFixed(0)}%)\`
+                    `${name} (${(percent * 100).toFixed(0)}%)`
                   }
                 >
                   {getEmotionStats().map((entry, index) => (
@@ -150,6 +150,6 @@ export default function EmotionRecord() {
           </Card>
         </div>
       </motion.div>
-    </main>
+    </div>
   )
 }
