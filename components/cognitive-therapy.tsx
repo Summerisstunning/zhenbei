@@ -150,9 +150,8 @@ export function CognitiveTherapy() {
             让我们一起探索内心，记录你的想法和感受
           </p>
           <Button
-            className="mt-4"
+            className="mt-4 text-gray-700"
             onClick={() => handleInputChange("让我开始记录...")}
-            className="text-gray-700"
           >
             开始记录
           </Button>
