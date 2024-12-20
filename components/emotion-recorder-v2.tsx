@@ -135,7 +135,7 @@ export function EmotionRecorderV2({ onRecordEmotion }: EmotionRecorderProps) {
         <Button
           variant="outline"
           onClick={() => setIsOpen(true)}
-          className="rounded-full bg-gradient-to-r from-red-100 via-yellow-100 via-green-100 via-blue-100 to-purple-100 hover:from-red-200 hover:via-yellow-200 hover:via-green-200 hover:via-blue-200 hover:to-purple-200 border-0 flex items-center gap-2 px-6 py-3 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="rounded-full bg-gradient-to-r from-red-100 via-yellow-100 via-green-100 via-blue-100 to-purple-100 hover:from-red-200 hover:via-yellow-200 hover:via-green-200 hover:via-blue-200 hover:to-purple-200 border-0 flex items-center gap-2 px-6 py-3 transform hover:scale-105 transition duration-300 shadow-lg hover:shadow-xl"
         >
           <Heart className="h-6 w-6 text-gray-600" />
           <span className="text-gray-600">记录情绪</span>
