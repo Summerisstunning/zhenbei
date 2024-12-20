@@ -1,3 +1,5 @@
+"use client"
+
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
@@ -30,14 +32,22 @@ const COLORS = [
 ]
 
 export default function EmotionRecord() {
+  const [mounted, setMounted] = useState(false)
   const [records, setRecords] = useState<any[]>([])
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0])
 
-  // 从 localStorage 加载数据
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   useEffect(() => {
     const storedRecords = JSON.parse(localStorage.getItem("emotionRecords") || "[]")
     setRecords(storedRecords)
   }, [])
+
+  if (!mounted) {
+    return null
+  }
 
   // 获取选定日期的记录
   const getDayRecords = () => {
