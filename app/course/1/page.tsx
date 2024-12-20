@@ -83,7 +83,7 @@ export default function Course1() {
             <Link 
               href="/第1课自我觉察.pdf" 
               target="_blank"
-              className="inline-block bg-white/90 hover:bg-white text-gray-800 px-6 py-3 rounded-lg shadow-lg transition-all duration-300"
+              className="inline-block bg-white/90 hover:bg-white text-gray-800 px-6 py-3 rounded-lg shadow-lg transition duration-300"
             >
               查看课件
             </Link>
@@ -138,7 +138,7 @@ export default function Course1() {
                       <li 
                         key={index}
                         onClick={() => handleStepClick(step)}
-                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 text-gray-700 hover:shadow-md transform hover:scale-102 transition-all duration-300"
+                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 text-gray-700 hover:shadow-md transform hover:scale-102 transition duration-300"
                       >
                         {index + 1}. {step.title}
                       </li>
@@ -165,7 +165,7 @@ export default function Course1() {
                       <li 
                         key={index}
                         onClick={() => handleStepClick(step)}
-                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 text-gray-700 hover:shadow-md transform hover:scale-102 transition-all duration-300"
+                        className="p-4 bg-gray-50 rounded cursor-pointer hover:bg-gray-100 text-gray-700 hover:shadow-md transform hover:scale-102 transition duration-300"
                       >
                         {index + 1}. {step.title}
                       </li>
