@@ -48,7 +48,7 @@ export default function Course2() {
             <Link 
               href="/第2课自我认知.pdf" 
               target="_blank"
-              className="inline-block bg-white/90 hover:bg-white text-gray-800 px-6 py-3 rounded-lg shadow-lg transition-all duration-300"
+              className="inline-block bg-white/90 hover:bg-white text-gray-800 px-6 py-3 rounded-lg shadow-lg transition duration-300"
             >
               查看课件
             </Link>
