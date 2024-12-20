@@ -6,6 +6,9 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
+// 配置较大的请求体限制
+export const runtime = 'edge'
+
 export async function POST(request: Request) {
   try {
     if (!process.env.OPENAI_API_KEY) {
@@ -35,19 +38,9 @@ export async function POST(request: Request) {
       )
     }
 
-    // 将 Blob 转换为 Buffer
-    const audioBuffer = Buffer.from(await audioFile.arrayBuffer())
-
-    // 创建临时文件
-    const file = new File([audioBuffer], "audio.wav", {
-      type: audioFile.type || "audio/wav",
-    })
-
-    // 调用 OpenAI API
     const transcription = await openai.audio.transcriptions.create({
-      file: file,
+      file: audioFile,
       model: "whisper-1",
-      language: "zh",
     })
 
     return new Response(
@@ -59,11 +52,10 @@ export async function POST(request: Request) {
         },
       }
     )
-
-  } catch (error: any) {
-    console.error("Error in speech-to-text:", error)
+  } catch (error) {
+    console.error("Error processing audio:", error)
     return new Response(
-      JSON.stringify({ error: error.message || "Error processing audio" }),
+      JSON.stringify({ error: "Error processing audio file" }),
       {
         status: 500,
         headers: {
@@ -72,11 +64,4 @@ export async function POST(request: Request) {
       }
     )
   }
-}
-
-// 配置较大的请求体限制
-export const config = {
-  api: {
-    bodyParser: false,
-  },
 }
