@@ -114,11 +114,15 @@ export function CommunicationAssistant() {
             </p>
             
             <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-gray-800">{steps[currentStep].title}</h3>
+              <p className="text-gray-600 whitespace-pre-line">
+                {steps[currentStep].description}
+              </p>
               <Textarea
                 value={responses[steps[currentStep].id] || ""}
                 onChange={(e) => handleInputChange(e.target.value)}
-                placeholder="请在这里输入..."
-                className="min-h-[150px]"
+                className="min-h-[120px] text-gray-700 placeholder:text-gray-400"
+                placeholder="在这里输入你的想法..."
               />
               
               <div className="flex justify-between">

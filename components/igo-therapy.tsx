@@ -25,9 +25,14 @@ export function IGOTherapy() {
             )}
             <audio 
               controls 
+              preload="metadata"
               src="/内进.m4a" 
               className="w-full [&::-webkit-media-controls-panel]:bg-blue-50" 
               onLoadedData={() => setLoading1(false)}
+              onError={(e) => {
+                console.error("Audio 1 error:", e);
+                setLoading1(false);
+              }}
             />
           </div>
         </div>
@@ -45,9 +50,14 @@ export function IGOTherapy() {
             )}
             <audio 
               controls 
+              preload="metadata"
               src="/远观.m4a" 
               className="w-full [&::-webkit-media-controls-panel]:bg-blue-50" 
               onLoadedData={() => setLoading2(false)}
+              onError={(e) => {
+                console.error("Audio 2 error:", e);
+                setLoading2(false);
+              }}
             />
           </div>
         </div>
