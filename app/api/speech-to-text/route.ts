@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     const formData = await request.formData()
-    const audioFile = formData.get("audio") as Blob
+    const audioFile = formData.get("audio") as File
 
     if (!audioFile) {
       return new Response(
