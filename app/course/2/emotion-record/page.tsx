@@ -1,151 +1,159 @@
 "use client"
 
-import { motion } from "framer-motion"
-import Link from "next/link"
+import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
-import useLocalStorage from "@/hooks/useLocalStorage"
-
-// 图表组件（使用 recharts）
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts"
-
-const COLORS = [
-  "#FF8042",
-  "#00C49F",
-  "#FFBB28",
-  "#FF8042",
-  "#0088FE",
-  "#FF6B6B",
-  "#4CAF50",
-  "#9C27B0",
-]
+import { Textarea } from "@/components/ui/textarea"
+import { useEmotionRecords } from "@/hooks/useEmotionRecords"
+import { useAuth } from "@/hooks/useAuth"
 
 export default function EmotionRecord() {
-  const [mounted, setMounted] = useState(false)
-  const [records, setRecords] = useLocalStorage<any[]>("emotionRecords", [])
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0])
+  const { userId } = useAuth();
+  const { records, addRecord } = useEmotionRecords();
+  const [currentEmotion, setCurrentEmotion] = useState({
+    date: new Date().toISOString().split('T')[0],
+    emotion: "",
+    intensity: 5,
+    trigger: "",
+    thoughts: "",
+    bodyFeelings: "",
+    behaviors: ""
+  });
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
-
-  // 获取选定日期的记录
-  const getDayRecords = () => {
-    return records.filter(record => 
-      record.timestamp.startsWith(selectedDate)
-    )
-  }
-
-  // 统计情绪分布
-  const getEmotionStats = () => {
-    const dayRecords = getDayRecords()
-    const stats = dayRecords.reduce((acc: any, record: any) => {
-      acc[record.emotion] = (acc[record.emotion] || 0) + 1
-      return acc
-    }, {})
-
-    return Object.entries(stats).map(([name, value]) => ({
-      name,
-      value,
-    }))
-  }
+  const handleSubmit = () => {
+    addRecord(currentEmotion);
+    // 清空表单
+    setCurrentEmotion({
+      date: new Date().toISOString().split('T')[0],
+      emotion: "",
+      intensity: 5,
+      trigger: "",
+      thoughts: "",
+      bodyFeelings: "",
+      behaviors: ""
+    });
+  };
 
   return (
-    <div className="flex min-h-screen flex-col items-center p-8 bg-gradient-to-b from-gray-50 to-white">
-      <motion.div 
-        className="w-full max-w-4xl"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Link href="/course/2" className="text-blue-600 hover:text-blue-800 mb-8 inline-block">
-          ← 返回课程页面
-        </Link>
-
-        <h1 className="text-3xl font-bold mb-8 text-gray-800">情绪记录</h1>
-
-        <div className="space-y-8">
-          {/* 日期选择 */}
-          <Card className="p-6">
-            <h2 className="text-xl font-semibold mb-4">选择日期</h2>
+    <main className="min-h-screen p-4 md:p-8 bg-gradient-to-br from-blue-50 to-pink-50">
+      <Card className="max-w-2xl mx-auto p-6 bg-white/90">
+        <h1 className="text-2xl font-serif mb-6 text-gray-800">情绪记录</h1>
+        
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              日期
+            </label>
             <input
               type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="border rounded p-2"
+              value={currentEmotion.date}
+              onChange={(e) => setCurrentEmotion({...currentEmotion, date: e.target.value})}
+              className="w-full p-2 border rounded-md"
             />
-          </Card>
+          </div>
 
-          {/* 情绪统计 */}
-          <Card className="p-6">
-            <h2 className="text-xl font-semibold mb-4">情绪分布</h2>
-            <div className="flex justify-center">
-              <PieChart width={400} height={300}>
-                <Pie
-                  data={getEmotionStats()}
-                  cx={200}
-                  cy={150}
-                  labelLine={false}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                  label={({ name, percent }) => 
-                    `${name} (${(percent * 100).toFixed(0)}%)`
-                  }
-                >
-                  {getEmotionStats().map((entry, index) => (
-                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </div>
-          </Card>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              情绪
+            </label>
+            <Textarea
+              value={currentEmotion.emotion}
+              onChange={(e) => setCurrentEmotion({...currentEmotion, emotion: e.target.value})}
+              placeholder="你感受到了什么情绪？"
+              className="min-h-[80px]"
+            />
+          </div>
 
-          {/* 历史记录 */}
-          <Card className="p-6">
-            <h2 className="text-xl font-semibold mb-4">历史记录</h2>
-            <div className="space-y-4">
-              {getDayRecords().map((record, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="p-4 bg-gray-50 rounded-lg"
-                >
-                  <p className="text-gray-800">
-                    情绪：{record.emotion}
-                    {record.intensity && ` - ${record.intensity}`}
-                  </p>
-                  <p className="text-gray-600 text-sm">
-                    时间：{new Date(record.timestamp).toLocaleString()}
-                  </p>
-                </motion.div>
-              ))}
-              {getDayRecords().length === 0 && (
-                <p className="text-gray-600 text-center">当日暂无记录</p>
-              )}
-            </div>
-          </Card>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              强度 (1-10)
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={currentEmotion.intensity}
+              onChange={(e) => setCurrentEmotion({...currentEmotion, intensity: parseInt(e.target.value)})}
+              className="w-full"
+            />
+            <div className="text-center">{currentEmotion.intensity}</div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              触发事件
+            </label>
+            <Textarea
+              value={currentEmotion.trigger}
+              onChange={(e) => setCurrentEmotion({...currentEmotion, trigger: e.target.value})}
+              placeholder="是什么引发了这种情绪？"
+              className="min-h-[80px]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              想法
+            </label>
+            <Textarea
+              value={currentEmotion.thoughts}
+              onChange={(e) => setCurrentEmotion({...currentEmotion, thoughts: e.target.value})}
+              placeholder="当时你在想什么？"
+              className="min-h-[80px]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              身体感受
+            </label>
+            <Textarea
+              value={currentEmotion.bodyFeelings}
+              onChange={(e) => setCurrentEmotion({...currentEmotion, bodyFeelings: e.target.value})}
+              placeholder="你的身体有什么感受？"
+              className="min-h-[80px]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              行为反应
+            </label>
+            <Textarea
+              value={currentEmotion.behaviors}
+              onChange={(e) => setCurrentEmotion({...currentEmotion, behaviors: e.target.value})}
+              placeholder="你做了什么？"
+              className="min-h-[80px]"
+            />
+          </div>
+
+          <Button onClick={handleSubmit} className="w-full">
+            保存记录
+          </Button>
         </div>
-      </motion.div>
-    </div>
-  )
+
+        {/* 显示历史记录 */}
+        <div className="mt-8">
+          <h2 className="text-xl font-serif mb-4 text-gray-800">历史记录</h2>
+          <div className="space-y-4">
+            {records.map((record) => (
+              <Card key={record.id} className="p-4 bg-white/80">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="text-sm text-gray-500">{new Date(record.date).toLocaleDateString()}</div>
+                  <div className="text-sm font-medium">强度: {record.intensity}</div>
+                </div>
+                <div className="space-y-2">
+                  <p><strong>情绪：</strong>{record.emotion}</p>
+                  <p><strong>触发事件：</strong>{record.trigger}</p>
+                  <p><strong>想法：</strong>{record.thoughts}</p>
+                  <p><strong>身体感受：</strong>{record.bodyFeelings}</p>
+                  <p><strong>行为反应：</strong>{record.behaviors}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </Card>
+    </main>
+  );
 }

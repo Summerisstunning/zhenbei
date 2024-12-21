@@ -19,24 +19,24 @@ export function WeatherReport() {
           <Cloud className="h-5 w-5" />
           <span className="text-lg font-serif">气象报告</span>
         </Button>
-        <DialogContent className="bg-white/95 backdrop-blur-sm border-none rounded-[60px_30px_50px_40px] p-8 w-[500px] shadow-xl">
+        <DialogContent className="bg-white/95 backdrop-blur-sm border-none sm:rounded-[60px_30px_50px_40px] rounded-xl p-4 sm:p-8 w-[90vw] sm:w-[500px] max-w-lg mx-auto shadow-xl">
           <DialogTitle className="sr-only">气象报告</DialogTitle>
-          <div className="space-y-6 text-gray-700 font-serif leading-relaxed">
-            <p className="text-lg">
+          <div className="space-y-4 sm:space-y-6 text-gray-700 font-serif leading-relaxed">
+            <p className="text-base sm:text-lg">
               请觉知此刻您的身体感受：
               <br />
-              <span className="text-gray-500 text-base">
+              <span className="text-gray-500 text-sm sm:text-base">
                 例如某个部位的微小疼痛、酸胀或其他感受。
               </span>
             </p>
-            <p className="text-lg">
+            <p className="text-base sm:text-lg">
               然后描述此刻的情绪：
               <br />
-              <span className="text-gray-500 text-base">
+              <span className="text-gray-500 text-sm sm:text-base">
                 注意：只关注情绪，不涉及其他。
               </span>
             </p>
-            <p className="text-lg">
+            <p className="text-base sm:text-lg">
               最后，请表达当下脑中您的念头
             </p>
           </div>
