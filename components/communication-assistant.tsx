@@ -114,10 +114,6 @@ export function CommunicationAssistant() {
             </p>
             
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-gray-800">{steps[currentStep].title}</h3>
-              <p className="text-gray-600 whitespace-pre-line">
-                {steps[currentStep].description}
-              </p>
               <Textarea
                 value={responses[steps[currentStep].id] || ""}
                 onChange={(e) => handleInputChange(e.target.value)}
