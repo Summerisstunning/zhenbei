@@ -11,6 +11,7 @@ import IcebergDialog from "@/components/iceberg-dialog"
 import { MeditationMusic } from "@/components/meditation-music"
 import { Home } from "lucide-react"
 import { BackgroundImage } from "@/components/background-image"
+import Image from "next/image"
 
 const icebergSteps = {
   forward: [
