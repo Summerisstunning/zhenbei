@@ -33,6 +33,10 @@ export function IGOTherapy() {
                 console.error("Audio 1 error:", e);
                 setLoading1(false);
               }}
+              onLoadStart={() => {
+                const audio = new Audio("/内进.m4a");
+                audio.preload = "metadata";
+              }}
             />
           </div>
         </div>
@@ -57,6 +61,10 @@ export function IGOTherapy() {
               onError={(e) => {
                 console.error("Audio 2 error:", e);
                 setLoading2(false);
+              }}
+              onLoadStart={() => {
+                const audio = new Audio("/远观.m4a");
+                audio.preload = "metadata";
               }}
             />
           </div>
