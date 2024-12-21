@@ -132,27 +132,45 @@ export function EmotionHistory() {
 
         <TabsContent value="stats">
           <div className="space-y-6">
-            <div className="flex justify-between items-start">
-              <div className="w-1/2">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
+              <div className="w-full md:w-1/2">
                 <h3 className="text-xl font-serif mb-4 text-gray-800">选择日期</h3>
                 <Calendar
                   mode="single"
                   selected={selectedDate}
                   onSelect={setSelectedDate}
-                  className="text-gray-700 bg-white rounded-lg p-4"
+                  className="text-gray-700 bg-white rounded-lg p-2 sm:p-4 mx-auto"
                 />
               </div>
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
                 <h3 className="text-xl font-serif mb-4 text-gray-800">情绪分布</h3>
-                <div className="w-full h-64">
-                  <Pie data={chartData} />
+                <div className="w-full aspect-square max-w-[300px] mx-auto">
+                  <Pie 
+                    data={chartData}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: true,
+                      plugins: {
+                        legend: {
+                          position: 'bottom',
+                          labels: {
+                            boxWidth: 12,
+                            padding: 10,
+                            font: {
+                              size: 12
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
                 </div>
                 {selectedDateRecords.length > 0 ? (
-                  <p className="mt-4 text-gray-600">
+                  <p className="mt-4 text-gray-600 text-center">
                     今天你记录了{selectedDateRecords.length}次情绪
                   </p>
                 ) : (
-                  <p className="mt-4 text-gray-600">当日暂无记录</p>
+                  <p className="mt-4 text-gray-600 text-center">当日暂无记录</p>
                 )}
               </div>
             </div>
