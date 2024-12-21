@@ -55,7 +55,7 @@ export default function Course1() {
   return (
     <main className="min-h-screen relative">
       <BackgroundImage
-        src="/course1-bg.jpg"
+        src="/nature-bg.jpg"
         alt="Course 1 Background"
       />
 
